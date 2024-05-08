@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"java.project.sourcePaths": [
+			"src",
+			"Tractor simulation"
+		],
+		"java.project.outputPath": "bin",
+		"java.project.referencedLibraries": [
+			"lib/**/*.jar",
+			"c:\\Users\\campb\\OneDrive - Stellenbosch University\\3 Modules\\Holonics\\JADE\\lib\\jade.jar",
+			"c:\\Users\\campb\\OneDrive - Stellenbosch University\\3 Modules\\Holonics\\JADE\\lib\\jadeExamples.jar"
+		]
+	}
+}

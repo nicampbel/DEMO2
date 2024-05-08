@@ -1,0 +1,11 @@
+A file can be added to your Eclipse project folder that specifies which agents should be included in the JADE Sniffer at startup.
+
+Create a text file in notepad that lists the names of the agents you want to see in the Sniffer.
+E.g.
+df
+Farm1Agent
+Sensor1Agent
+TractorAgent
+
+Save the text file with the name "sniffer". After saving, copy the file and change the extention to ".inf".
+Ultimately, there should be a "sniffer.inf" in the Eclipse project folder.

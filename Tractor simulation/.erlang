@@ -1,0 +1,16 @@
+io:format("C:/Program Files/erl10.0.1/usr/.erlang\n").
+io:format(" ______      _                   \n").
+io:format("|  ____|    | |                  \n").
+io:format("| |__   _ __| | __ _ _ __   __ _ \n").
+io:format("|  __| | '__| |/ _` | '_ \\ / _` |\n").
+io:format("| |____| |  | | (_| | | | | (_| |\n").
+io:format("|______|_|  |_|\\__,_|_| |_|\\__, |\n").
+io:format("                            __/ |\n").
+io:format("                           |___/ \n\n").
+shell_default:cd("C:\\Users\\campb\OneDrive - Stellenbosch University\\3 Modules\\Holonics\\D2\\Tractor simulation\\ebin").
+LP = fun() -> [code:ensure_loaded(list_to_atom(filename:rootname(filename:basename(F)))) || P <- code:get_path(), F <- filelib:wildcard(P ++ "/*.beam")] end.
+spawn(LP).
+
+%code:add_patha("C:/Users/kkruger/Desktop/Workspace/Erlang Manufacturing Cell Control/resource_holon/ebin").
+%RH = fun() -> [code:ensure_loaded(list_to_atom(filename:rootname(filename:basename(F)))) || P <- code:get_path(),F <- filelib:wildcard(P ++ "/*.beam")] end.
+%spawn(RH).

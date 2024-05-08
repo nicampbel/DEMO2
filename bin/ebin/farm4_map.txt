@@ -1,0 +1,8 @@
+{{farm2, p23},[{farm2,p22},{farm2,p13},{farm4,p21}]}.
+{{farm3, p23},[{farm3,p22},{farm3,p13},{farm4,p13}]}.
+{{farm4, p11},[{farm4,p21},{farm4,p12}]}.
+{{farm4, p12},[{farm4,p11},{farm4,p13},{farm4,p22}]}.
+{{farm4, p13},[{farm4,p12},{farm4,p23},{farm3,p23}]}.
+{{farm4, p21},[{farm4,p11},{farm4,p22},{farm2,p23}]}.
+{{farm4, p22},[{farm4,p12},{farm4,p21},{farm4,p23}]}.
+{{farm4, p23},[{farm4,p22},{farm4,p13}]}.

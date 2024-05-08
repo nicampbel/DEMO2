@@ -1,0 +1,3 @@
+erlangrc(["."]).
+
+startup:start(2,3).
