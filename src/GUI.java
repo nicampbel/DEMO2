@@ -10,37 +10,45 @@ import javax.swing.SwingUtilities;
 
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
-import jade.core.behaviours.OneShotBehaviour;
+import jade.domain.DFService;
+import jade.domain.FIPAException;
+import jade.domain.FIPAAgentManagement.DFAgentDescription;
+import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 import jade.wrapper.AgentController;
 import jade.wrapper.StaleProxyException;
 
-// @SuppressWarnings("unused")
+@SuppressWarnings("unused")
 public class GUI extends Agent {
 
     private JFrame frame;
     private JTextArea textArea;
 
-    private Object[] args;
+    private Integer tractors;
+    private Integer farms;
 
     @Override
     protected void setup() {
 
-        createGUI();
+        DFAgentDescription agentDes = new DFAgentDescription();
+        ServiceDescription serviceDes = new ServiceDescription();
+        serviceDes.setType("GUI");
+        serviceDes.setName("GUI");
+        agentDes.setName(getAID());
+        agentDes.addServices(serviceDes);
+        try {
+            DFService.register(this, agentDes);
+            System.out.println("Registered " + getAID().getName());
+        } catch (FIPAException e) {
+            e.printStackTrace();
+            System.out.println("Failed to register " + getAID().getName());
+        }
 
-        // Add the OneShot behavior to create and add the dashboard agent
-        addBehaviour(new OneShotBehaviour() {
-            public void action() {
-                // Create dashboard agent
-                try {
-                    AgentController dash = getContainerController().createNewAgent("GUI", GUI.class.getName(), null);
-                    dash.start();
-                } catch (StaleProxyException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+        this.tractors = 0;
+        this.farms = 0;
+
+        createGUI();
         addBehaviour(new Listener());
     }
 
@@ -62,18 +70,21 @@ public class GUI extends Agent {
         // Create the Tractor Button
         JButton tractorButton = new JButton("Add Tractor");
         tractorButton.addActionListener(e -> {
-            // X
-            // TODO get list of current agents to determine the next agent number
-            Object[] tractorArgs = {1}; // Pass the same argument to fuelAgent
             try {
-                String name = "tractorAgent" + args[0];
+                SwingUtilities.invokeLater(() -> textArea.append("Tractor add requested\n"));
+
+                // TODO Add tractor in ERLANG
+                
+                this.tractors++;
+                Object[] tractorArgs = {this.tractors}; // Pass the same argument to fuelAgent
+                String name = "tractorAgent" + tractorArgs[0];
                 AgentController tractor = getContainerController().createNewAgent(name, tractorAgent.class.getName(), tractorArgs);
                 tractor.start();
-            } catch (StaleProxyException ex) { // Rename the parameter to avoid duplication
+
+                SwingUtilities.invokeLater(() -> textArea.append("Tractor " + tractorArgs[0] + " added\n"));
+            } catch (StaleProxyException ex) {
                 ex.printStackTrace();
             }
-            // X
-            System.out.println("Tractor add requested");
         });
         buttonPanel.add(tractorButton);
 

@@ -1,6 +1,10 @@
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.core.behaviours.OneShotBehaviour;
+import jade.domain.DFService;
+import jade.domain.FIPAException;
+import jade.domain.FIPAAgentManagement.DFAgentDescription;
+import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 import jade.wrapper.AgentController;
@@ -25,16 +29,28 @@ public class tractorAgent extends Agent {
         
         if (ID == null) {
             args = getArguments();
-            System.out.println("Imported from Jade:" + args[0]);
+            // System.out.println("Imported from Program:" + args[0]);
         }
         else {
             args = ID;
-            System.out.println("Imported from program" + args[0]);
+            // System.out.println("Imported from Jade" + args[0]);
         }
         
         if (args != null) {
-            String name = "tractorAgent"+ args[0];
-            System.out.println(name + " created.");
+
+            DFAgentDescription agentDes = new DFAgentDescription();
+            ServiceDescription serviceDes = new ServiceDescription();
+            serviceDes.setType("tractorAgent");
+            serviceDes.setName("tractorAgent" + args[0]);
+            agentDes.setName(getAID());
+            agentDes.addServices(serviceDes);
+            try {
+                DFService.register(this, agentDes);
+                System.out.println("Registered " + getAID().getName());
+            } catch (FIPAException e) {
+                e.printStackTrace();
+                System.out.println("Failed to register " + getAID().getName());
+            }
             
             // Add the OneShot behavior to create and add the fuelAgent
             addBehaviour(new OneShotBehaviour() {
@@ -62,7 +78,7 @@ public class tractorAgent extends Agent {
             ACLMessage msg = receive(MessageTemplate.MatchPerformative(ACLMessage.INFORM));
             if (msg != null) {
                 String fuelConsumption = msg.getContent();
-                System.out.println("Received fuel consumption: " + fuelConsumption);
+                // System.out.println("Received fuel consumption: " + fuelConsumption);
                 sendFuel(fuelConsumption);
                 
             }
